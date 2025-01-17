@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>洛梦Warframe 使用帮助</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            min-width: 300px;
+        }
+        .column button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 300px;
+        }
+        .column button:hover {
+            background-color: #45a049;
+        }
+        .status {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 300px;
+            margin: 10px 0;
+        }
+        .status h2 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .status p {
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+        .fissures-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .fissures-box {
+            background-color: #444;
+            padding: 20px;
+            border-radius: 10px;
+            width: 30%;
+            min-width: 300px;
+            flex: 1;
+        }
+        .fissures-box h2 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .fissures-box p {
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+        .button-group button {
+            background-color: #008CBA;
+        }
+        .button-group button:hover {
+            background-color: #007B9E;
+        }
+    </style>
+</head>
+<body>
+    <h1>洛梦Warframe 使用帮助</h1>
+    <div class="container">
+        <div class="column">
+            <div class="button-group">
+                <button onclick="window.open('https://media.st.dl.eccdnx.com/client/installer/SteamSetup.exe', '_blank')">Steam下载</button>
+                <button onclick="window.open('https://www.warframe.com/signup', '_blank')">Warframe官网注册</button>
+                <button onclick="window.open('https://www.saibo.com/', '_blank')">赛博加速器官网</button>
+                <button onclick="window.open('https://qm.qq.com/q/L1S6gFj4oI', '_blank')">洛梦warframe机器人群</button>
+            </div>
+        </div>
+        <div class="column">
+            <div class="button-group">
+                <button onclick="window.open('https://warframe.huijiwiki.com/wiki/%E9%A6%96%E9%A1%B5', '_blank')">灰机Warframe Wiki</button>
+                <button onclick="window.open('https://riven.ckylin.site/', '_blank')">极境（平原时间）</button>
+                <button onclick="window.open('https://tenno.zone/planner', '_blank')">战甲配装器</button>
+                <button onclick="window.open('https://warframe.market/zh-hans/', '_blank')">Warframe市场</button>
+                <button onclick="window.open('https://warframe.market/zh-hans/auctions', '_blank')">Warframe市场紫卡玄骸</button>
+            </div>
+        </div>
+        <div class="column">
+            <div class="status">
+                <h2>突击</h2>
+                <p id="sortie">加载中...</p>
+            </div>
+            <div class="status">
+                <h2>执行官猎杀</h2>
+                <p id="archonHunt">加载中...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="fissures-container">
+        <div class="fissures-box">
+            <h2>钢铁裂缝</h2>
+            <p id="steelFissures">加载中...</p>
+        </div>
+        <div class="fissures-box">
+            <h2>普通裂缝</h2>
+            <p id="normalFissures">加载中...</p>
+        </div>
+        <div class="fissures-box">
+            <h2>比邻星裂缝</h2>
+            <p id="bilinxingFissures">加载中...</p>
+        </div>
+    </div>
+
+    <script>
+        const simplified = {
+            "衛": "卫",
+            "二": "二",
+            "歐": "欧",
+            "羅": "罗",
+            "巴": "巴",
+            "賽": "赛",
+            "德": "德",
+            "娜": "娜",
+            "閾": "阋",
+            "神": "神",
+            "扎": "扎",
+            "里": "里",
+            "曼": "曼",
+            "號": "号",
+            "刺": "刺",
+            "殺": "杀",
+            "捕": "捕",
+            "獲": "获",
+            "殲": "歼",
+            "滅": "灭",
+            "劫": "劫",
+            "持": "持",
+            "移": "移",
+            "動": "动",
+            "防": "防",
+            "禦": "御",
+            "破": "破",
+            "壞": "坏",
+            "救": "救",
+            "援": "援",
+            "間": "间",
+            "諜": "谍",
+            "強": "强",
+            "襲": "袭",
+            "揚": "扬",
+            "升": "升",
+            "競": "竞",
+            "技": "技",
+            "場": "场",
+            "R": "R",
+            "a": "a",
+            "t": "t",
+            "h": "h",
+            "u": "u",
+            "m": "m",
+            "或": "或",
+            "指": "指",
+            "數": "数",
+            "之": "之",
+            "接": "接",
+            "合": "合",
+            "點": "点",
+            "（": "（",
+            "精": "精",
+            "英": "英",
+            "）": "）",
+            "聖": "圣",
+            "殿": "殿",
+            "突": "突",
+            "襲": "袭",
+            "I": "I",
+            "n": "n",
+            "f": "f",
+            "e": "e",
+            "s": "s",
+            "t": "t",
+            "e": "e",
+            "d": "d",
+            "資": "资",
+            "源": "源",
+            "回": "回",
+            "收": "收",
+            "攔": "拦",
+            "截": "截",
+            "叛": "叛",
+            "逃": "逃",
+            "防": "防",
+            "禦": "御",
+            "中": "中",
+            "斷": "断",
+            "挖": "挖",
+            "掘": "掘",
+            "生": "生",
+            "存": "存",
+            "自": "自",
+            "由": "由",
+            "漫": "漫",
+            "遊": "游",
+            "賞": "赏",
+            "金": "金",
+            "夜": "夜",
+            "靈": "灵",
+            "平": "平",
+            "野": "野",
+            "奧": "奥",
+            "布": "布",
+            "山": "山",
+            "谷": "谷",
+            "魔": "魔",
+            "胎": "胎",
+            "之": "之",
+            "敵": "敌",
+            "護": "护",
+            "強": "强",
+            "這": "这",
+            "境": "境",
+            "虛": "虚",
+            "空": "空",
+            "覆": "覆",
+            "涌": "涌",
+            "洪": "洪",
+            "流": "流",
+            "決": "决",
+            "戰": "战",
+            "元": "元",
+            "素": "素",
+            "轉": "转",
+            "換": "换",
+            "追": "追",
+            "擊": "击",
+            "突": "突",
+            "襲": "袭",
+            "前": "前",
+            "哨": "哨",
+            "戰": "战",
+            "航": "航",
+            "道": "道",
+            "星": "星",
+            "艦": "舰",
+            "限": "限",
+            "定": "定",
+            "穀": "谷",
+            "鬩": "阋",
+            "Kuva 要塞": "赤毒要塞",
+            "爆": "爆",
+            "發": "发",
+            "雙": "双",
+            "奧": "奥",
+            "影": "影",
+        };
+
+        function traditionalToSimplified(text) {
+            return text.split('').map(char => simplified[char] || char).join('');
+        }
+
+        async function fetchSortie() {
+            try {
+                const response = await fetch('https://api.warframestat.us/pc/sortie/?language=zh');
+                const data = await response.json();
+                const boss = traditionalToSimplified(data.boss);
+                const faction = traditionalToSimplified(data.faction);
+                const eta = traditionalToSimplified(data.eta);
+                const missions = data.variants.map(variant => ({
+                    node: traditionalToSimplified(variant.node),
+                    missionType: traditionalToSimplified(variant.missionType),
+                    modifier: traditionalToSimplified(variant.modifier)
+                }));
+                const sortieText = `
+                    Boss: ${boss} (${faction})<br>
+                    任务1: ${missions[0].node} - ${missions[0].missionType} (${missions[0].modifier})<br>
+                    任务2: ${missions[1].node} - ${missions[1].missionType} (${missions[1].modifier})<br>
+                    任务3: ${missions[2].node} - ${missions[2].missionType} (${missions[2].modifier})<br>
+                    剩余时间: ${eta}
+                `;
+                document.getElementById('sortie').innerHTML = sortieText;
+            } catch (error) {
+                console.error('获取突击任务信息失败:', error);
+                document.getElementById('sortie').innerText = '获取状态失败';
+            }
+        }
+
+        async function fetchArchonHunt() {
+            try {
+                const response = await fetch('https://api.warframestat.us/pc/archonHunt/?language=zh');
+                const data = await response.json();
+                const simplifiedData = {
+                    boss: traditionalToSimplified(data.boss),
+                    faction: traditionalToSimplified(data.faction),
+                    eta: traditionalToSimplified(data.eta),
+                    missions: data.missions.map(mission => ({
+                        node: traditionalToSimplified(mission.node),
+                        type: traditionalToSimplified(mission.type)
+                    }))
+                };
+                const archonHuntText = `
+                    Boss: ${simplifiedData.boss} (${simplifiedData.faction})<br>
+                    任务1: ${simplifiedData.missions[0].node} - ${simplifiedData.missions[0].type}<br>
+                    任务2: ${simplifiedData.missions[1].node} - ${simplifiedData.missions[1].type}<br>
+                    任务3: ${simplifiedData.missions[2].node} - ${simplifiedData.missions[2].type}<br>
+                    剩余时间: ${simplifiedData.eta}
+                `;
+                document.getElementById('archonHunt').innerHTML = archonHuntText;
+            } catch (error) {
+                console.error('获取执行官猎杀任务信息失败:', error);
+                document.getElementById('archonHunt').innerText = '获取状态失败';
+            }
+        }
+
+        async function fetchFissures() {
+            try {
+                const response = await fetch('https://api.warframestat.us/pc/fissures/?language=zh');
+                const data = await response.json();
+                data.sort((a, b) => {
+                    const priorityA = a.isStorm ? 2 : (a.isHard ? 1 : 0);
+                    const priorityB = b.isStorm ? 2 : (b.isHard ? 1 : 0);
+                    if (priorityA !== priorityB) return priorityA - priorityB;
+                    return a.tierNum - b.tierNum;
+                });
+                const steelMissions = data.filter(fissure => fissure.isHard && !fissure.isStorm);
+                const normalMissions = data.filter(fissure => !fissure.isHard && !fissure.isStorm);
+                const bilinxingMissions = data.filter(fissure => fissure.isStorm);
+                const steelFissuresText = steelMissions.map(fissure => `
+                    ${traditionalToSimplified(fissure.missionType)} - ${traditionalToSimplified(fissure.node)} (${fissure.eta})
+                `).join('<br>') || '无钢铁裂缝任务';
+                const normalFissuresText = normalMissions.map(fissure => `
+                    ${traditionalToSimplified(fissure.missionType)} - ${traditionalToSimplified(fissure.node)} (${fissure.eta})
+                `).join('<br>') || '无普通裂缝任务';
+                const bilinxingFissuresText = bilinxingMissions.map(fissure => `
+                    ${traditionalToSimplified(fissure.missionType)} - ${traditionalToSimplified(fissure.node)} (${fissure.eta})
+                `).join('<br>') || '无比邻星裂缝任务';
+                document.getElementById('steelFissures').innerHTML = steelFissuresText;
+                document.getElementById('normalFissures').innerHTML = normalFissuresText;
+                document.getElementById('bilinxingFissures').innerHTML = bilinxingFissuresText;
+            } catch (error) {
+                console.error('获取裂缝任务信息失败:', error);
+                document.getElementById('steelFissures').innerText = '获取状态失败';
+                document.getElementById('normalFissures').innerText = '获取状态失败';
+                document.getElementById('bilinxingFissures').innerText = '获取状态失败';
+            }
+        }
+
+        fetchSortie();
+        fetchArchonHunt();
+        fetchFissures();
+        setInterval(fetchSortie, 300000);
+        setInterval(fetchArchonHunt, 300000);
+        setInterval(fetchFissures, 300000);
+    </script>
+</body>
+</html>
